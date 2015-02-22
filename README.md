@@ -13,7 +13,7 @@ Before running the script make sure the ANTs executable directory is in your def
 
 Run the script from the BasicBrainMapping directory like this:
 ```
-./bbm.sh data/IXI/T_template2.nii.gz ./data/IXI594-Guys-1089-T1.nii.gz ./data/IXI/T_templateExtractionMask.nii.gz
+./bbm.sh ./data/IXI/T_template2.nii.gz ./data/IXI594-Guys-1089-T1.nii.gz ./data/IXI/T_templateExtractionMask.nii.gz
 ```
 
 ![T1_lesioned](https://raw.github.com/stnava/BasicBrainMapping/master/T1_lesioned.jpg?raw=true)
