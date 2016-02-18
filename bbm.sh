@@ -1,5 +1,5 @@
 #!/bin/bash
-set -x -e
+set -e
 dim=3 # image dimensionality
 AP=$ANTSPATH # /home/yourself/code/ANTS/bin/bin/  # path to ANTs binaries
 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=4  # controls multi-threading
