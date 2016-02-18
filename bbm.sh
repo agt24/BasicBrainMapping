@@ -1,10 +1,11 @@
 #!/bin/bash
+set -x -e
 dim=3 # image dimensionality
 AP=$ANTSPATH # /home/yourself/code/ANTS/bin/bin/  # path to ANTs binaries
 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=4  # controls multi-threading
 export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS
 f=$1 ; m=$2 ; mask=$3   # fixed and moving image file names
-if [[ ${#f} -eq 0 ]] ; then 
+if [ $# -lt 3 ] ; then 
 echo usage is 
 echo $0 fixed.nii.gz moving.nii.gz  fixed_brain_mask.nii.gz 
 exit
@@ -50,10 +51,10 @@ echo here we assume the affine map is not corrupted by the lesion.
 echo We do, however, mask the deformation estimation with a lesion mask.
 origmat=${nm}0GenericAffine.mat
 nm=BBM_Lesion
-SmoothImage 3 data/lesion.nii.gz 2 data/neg_lesion.nii.gz
-ImageMath 3  data/neg_lesion.nii.gz CorruptImage  data/neg_lesion.nii.gz 
-ImageMath 3 data/neg_lesion.nii.gz Neg data/neg_lesion.nii.gz 
-MultiplyImages 3 data/neg_lesion.nii.gz $2 data/T1_lesioned.nii.gz 
+$AP/SmoothImage 3 data/lesion.nii.gz 2 data/neg_lesion.nii.gz
+$AP/ImageMath 3  data/neg_lesion.nii.gz CorruptImage  data/neg_lesion.nii.gz 
+$AP/ImageMath 3 data/neg_lesion.nii.gz Neg data/neg_lesion.nii.gz 
+$AP/MultiplyImages 3 data/neg_lesion.nii.gz $2 data/T1_lesioned.nii.gz 
 m=data/T1_lesioned.nii.gz
 imgs=" $m, $f "
 myit=1000
@@ -64,7 +65,7 @@ $reg -d $dim -r [${origmat},1] \
     -s 1x0.5x0vox  \
     -f 4x2x1 -l 1 -u 1 -z 1 -x data/neg_lesion.nii.gz   \
     -o [${nm},${nm}_diff.nii.gz,${nm}_inv.nii.gz]
-ExtractSliceFromImage 3 data/T1_lesioned.nii.gz temp.nii.gz 1 120
-ConvertImagePixelType temp.nii.gz T1_lesioned.jpg 1
-ExtractSliceFromImage 3 ${nm}_diff.nii.gz temp.nii.gz 1 120
-ConvertImagePixelType temp.nii.gz Template2T1_lesioned.jpg 1
+$AP/ExtractSliceFromImage 3 data/T1_lesioned.nii.gz temp.nii.gz 1 120
+$AP/ConvertImagePixelType temp.nii.gz T1_lesioned.jpg 1
+$AP/ExtractSliceFromImage 3 ${nm}_diff.nii.gz temp.nii.gz 1 120
+$AP/ConvertImagePixelType temp.nii.gz Template2T1_lesioned.jpg 1
