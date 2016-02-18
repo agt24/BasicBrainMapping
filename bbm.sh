@@ -1,6 +1,6 @@
 #!/bin/bash
 dim=3 # image dimensionality
-AP="" # /home/yourself/code/ANTS/bin/bin/  # path to ANTs binaries
+AP=$ANTSPATH # /home/yourself/code/ANTS/bin/bin/  # path to ANTs binaries
 ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS=4  # controls multi-threading
 export ITK_GLOBAL_DEFAULT_NUMBER_OF_THREADS
 f=$1 ; m=$2 ; mask=$3   # fixed and moving image file names
